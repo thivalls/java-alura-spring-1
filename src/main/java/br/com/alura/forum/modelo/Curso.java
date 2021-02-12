@@ -63,4 +63,12 @@ public class Curso {
 		this.categoria = categoria;
 	}
 
+	@Override
+	public String toString() {
+		return "Curso{" +
+				"id=" + id +
+				", nome='" + nome + '\'' +
+				", categoria='" + categoria + '\'' +
+				'}';
+	}
 }
