@@ -3,6 +3,7 @@ package br.com.alura.forum.resources;
 import br.com.alura.forum.dto.TopicoDTO;
 import br.com.alura.forum.dto.TopicoFullDTO;
 import br.com.alura.forum.form.TopicoForm;
+import br.com.alura.forum.form.TopicoFormUpdate;
 import br.com.alura.forum.modelo.Topico;
 import br.com.alura.forum.repositories.CursoRepository;
 import br.com.alura.forum.repositories.TopicoRepository;
@@ -11,11 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -57,5 +60,14 @@ public class TopicResource {
             return ResponseEntity.created(uri).body(new TopicoDTO(topico));
         }
         return null;
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<TopicoFullDTO> update(@PathVariable Long id, @RequestBody @Valid TopicoFormUpdate topico) {
+        Topico topicoCarregado = topicoRepository.getOne(id);
+        topicoCarregado.setTitulo(topico.getTitulo());
+        topicoCarregado.setMensagem(topico.getMensagem());
+        return ResponseEntity.ok().body(new TopicoFullDTO(topicoCarregado));
     }
 }

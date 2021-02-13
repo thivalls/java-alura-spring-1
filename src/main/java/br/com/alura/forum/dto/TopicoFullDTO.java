@@ -1,10 +1,7 @@
 package br.com.alura.forum.dto;
 
-import br.com.alura.forum.modelo.Curso;
-import br.com.alura.forum.modelo.Resposta;
 import br.com.alura.forum.modelo.StatusTopico;
 import br.com.alura.forum.modelo.Topico;
-import br.com.alura.forum.modelo.Usuario;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

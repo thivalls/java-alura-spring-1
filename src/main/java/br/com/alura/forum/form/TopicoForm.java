@@ -46,7 +46,6 @@ public class TopicoForm {
 
     public Topico converter(CursoRepository cursoRepository) {
         Curso curso = cursoRepository.findByNome(cursoNome);
-        System.out.println(">>>" + curso);
         return new Topico(titulo, mensagem, curso);
     }
 

@@ -14,7 +14,6 @@ public class RespostaDTO {
 
     }
 
-
     public RespostaDTO(Resposta resposta) {
         this.id = resposta.getId();
         this.mensagem = resposta.getMensagem();
