@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,11 +46,9 @@ public class TopicResource {
     @GetMapping
     public Page<TopicoDTO> all(
             @RequestParam(required = false) String nomeCurso,
-            @RequestParam int page,
-            @RequestParam int size,
-            @RequestParam String order
+            @PageableDefault(page = 0, size = 3, sort = "mensagem", direction = Sort.Direction.DESC) Pageable pagination
     ) {
-        Pageable pagination = PageRequest.of(page, size, Sort.Direction.ASC, order);
+//        Pageable pagination = PageRequest.of(page, size, Sort.Direction.ASC, order);
 
         if (nomeCurso == null) {
             Page<Topico> topicos = topicoRepository.findAll(pagination);
