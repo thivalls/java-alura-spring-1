@@ -1,5 +1,6 @@
 package br.com.alura.forum.config.security;
 
+import br.com.alura.forum.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Override
     @Bean
@@ -48,6 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .anyRequest().authenticated()
             .and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .addFilterBefore(new AuthMiddleware(tokenService), UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(new AuthMiddleware(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
     }
 }

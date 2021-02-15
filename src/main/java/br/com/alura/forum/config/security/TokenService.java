@@ -1,6 +1,7 @@
 package br.com.alura.forum.config.security;
 
 import br.com.alura.forum.modelo.Usuario;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +28,7 @@ public class TokenService {
                 .setSubject(user.getId().toString())
                 .setIssuedAt(hoje)
                 .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.HS256,jwtSecret)
+                .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
 
@@ -38,5 +39,10 @@ public class TokenService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public Long getUserId(String token) {
+        Claims claims = Jwts.parser().setSigningKey(this.jwtSecret).parseClaimsJws(token).getBody();
+        return Long.parseLong(claims.getSubject());
     }
 }
